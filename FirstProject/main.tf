@@ -12,19 +12,17 @@ terraform {
   required_version = ">= 1.1.0"
 
   cloud {
-    organization = "REPLACE_ME"
+    organization = "ronaldorigo"
 
     workspaces {
-      name = "gh-actions-demo"
+      name = "ronaldorigo_mylab"
     }
   }
 }
 
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-1"
 }
-
-resource "random_pet" "sg" {}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -42,10 +40,12 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-resource "aws_instance" "web" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = [aws_security_group.web-sg.id]
+resource "aws_instance" "MyLab2" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = "t2.micro"
+  key_name                    = "mylab"
+  associate_public_ip_address = true
+  vpc_security_group_ids = [aws_security_group.MyLab_SG.name]
 
   user_data = <<-EOF
               #!/bin/bash
@@ -57,23 +57,71 @@ resource "aws_instance" "web" {
               EOF
 }
 
-resource "aws_security_group" "web-sg" {
-  name = "${random_pet.sg.id}-sg"
+resource "aws_security_group" "MyLab_SG" {
+  name        = "MyLab_SG"
+  description = "Allow Access By TCP/22 & TCP/80 & TCP/8080"
+
   ingress {
+    description = "SSH"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "HTTP"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "HTTP_8080"
     from_port   = 8080
     to_port     = 8080
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  // connectivity to ubuntu mirrors is required to run `apt-get update` and `apt-get install apache2`
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+  ingress {
+    description = "HTTP_3000"
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+  description       = "Allow ping"
+  from_port         = 8
+  to_port           = 0
+  protocol          = "icmp"
+  cidr_blocks       = ["0.0.0.0/00"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "MyLab_SG"
   }
 }
 
-output "web-address" {
-  value = "${aws_instance.web.public_dns}:8080"
+output "ARN" {
+  value = aws_instance.MyLab2.arn
 }
+output "ID" {
+  value = aws_instance.MyLab2.id
+}
+output "DNS_PUBLIC" {
+  value = aws_instance.MyLab2.public_dns
+}
+output "IP_PUBLIC" {
+  value = aws_instance.MyLab2.public_ip
+}
+#output "web-address" {
+#  value = "${aws_instance.web.public_dns}:8080"
+#}
