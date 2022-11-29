@@ -15,7 +15,7 @@ terraform {
     organization = "ronaldorigo"
 
     workspaces {
-      name = "ronaldorigo_mylab"
+      name = "ronaldo_rigo"
     }
   }
 }
@@ -28,7 +28,7 @@ resource "aws_instance" "MyLab2" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.micro"
   key_name                    = "mylab"
-  vpc_security_group_ids = [aws_security_group.MyLab_SG.name]
+  vpc_security_group_ids = [aws_security_group.MyLab2_SG.name]
   associate_public_ip_address = true
   tags = {
     Name = "MyLab2"
@@ -43,7 +43,7 @@ resource "aws_instance" "MyLab2" {
 #              EOF
 }
 
-resource "aws_security_group" "MyLab_SG" {
+resource "aws_security_group" "MyLab2_SG" {
   name        = "MyLab_SG"
   description = "Allow Access By TCP/22 & TCP/80 & TCP/8080"
 
@@ -92,7 +92,7 @@ resource "aws_security_group" "MyLab_SG" {
   }
 
   tags = {
-    Name = "MyLab_SG"
+    Name = "MyLab2_SG"
   }
 }
 
