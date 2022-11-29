@@ -1,3 +1,7 @@
+#API TOKEN TERRAFORM CLOUD 
+#xxLo4IQyUQrhmQ.atlasv1.C4ezvvwq4GRPy4ig0xJ4Gn7TCmbz18gSbtV6sA9gDO3ycutYlXfceqmKDpCyOMMcuzg
+#API TOKEN GITHUB
+#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
 terraform {
   cloud {
     organization = "ronaldorigo"
