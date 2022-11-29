@@ -1,3 +1,12 @@
+terraform {
+  cloud {
+    organization = "ronaldorigo"
+
+    workspaces {
+      name = "ronaldorigo_mylab"
+    }
+  }
+}
 #Instance parameters
 resource "aws_instance" "MyLab" {
   #count                       = 1
