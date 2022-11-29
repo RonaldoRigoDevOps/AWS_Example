@@ -106,6 +106,3 @@ output "DNS_PUBLIC" {
 output "IP_PUBLIC" {
   value = aws_instance.MyLab2.public_ip
 }
-#output "web-address" {
-#  value = "${aws_instance.web.public_dns}:8080"
-#}
