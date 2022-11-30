@@ -35,7 +35,7 @@ resource "aws_instance" "MyLab2" {
   tags = {
     Name = "MyLab2"
   }
-  user_data	= file("file.sh")
+  user_data	= file("script.sh")
 }
 
 resource "aws_security_group" "MyLab2_SG" {
