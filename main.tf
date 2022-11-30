@@ -1,3 +1,4 @@
+# The configuration for the `remote` backend.
 terraform {
   required_providers {
     aws = {
@@ -20,6 +21,7 @@ terraform {
   }
 }
 
+#PROVIDER
 provider "aws" {
   region = "us-east-1"
 }
@@ -27,20 +29,20 @@ provider "aws" {
 resource "aws_instance" "MyLab2" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.micro"
-  key_name                    = "mylab"
-  vpc_security_group_ids = [aws_security_group.MyLab2_SG.name]
+  key_name                    = aws_key_pair.MyLab2_KP.key_name
+  vpc_security_group_ids      = [aws_security_group.MyLab2_SG.name]
   associate_public_ip_address = true
   tags = {
     Name = "MyLab2"
   }
-  # user_data = <<-EOF
-#              #!/bin/bash
-#              apt-get update
-#              apt-get install -y apache2
-#              sed -i -e 's/80/8080/' /etc/apache2/ports.conf
-#              echo "Hello World" > /var/www/html/index.html
-#              systemctl restart apache2
-#              EOF
+  user_data = <<-EOF
+              #!/bin/bash
+              apt-get update
+              apt-get install -y apache2
+              sed -i -e 's/80/8080/' /etc/apache2/ports.conf
+              echo "Hello World" > /var/www/html/index.html
+              systemctl restart apache2
+              EOF
 }
 
 resource "aws_security_group" "MyLab2_SG" {
