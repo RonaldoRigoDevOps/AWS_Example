@@ -1,20 +1,10 @@
 # The configuration for the `remote` backend.
 terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "3.26.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.0.1"
-    }
-  }
-  required_version = ">= 1.1.0"
+  backend "ronaldorigo" {
+    # The name of your Terraform Cloud organization.
+    organization = "vinibackes"
 
-  cloud {
-    organization = "ronaldorigo"
-
+    # The name of the Terraform Cloud workspace to store Terraform state files in.
     workspaces {
       name = "ronaldo_rigo"
     }
