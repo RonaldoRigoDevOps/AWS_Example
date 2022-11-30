@@ -44,7 +44,7 @@ resource "aws_instance" "MyLab2" {
 }
 
 resource "aws_security_group" "MyLab2_SG" {
-  name        = "MyLab_SG"
+  name        = "MyLab2_SG"
   description = "Allow Access By TCP/22 & TCP/80 & TCP/8080"
 
   ingress {
