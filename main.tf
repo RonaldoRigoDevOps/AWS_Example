@@ -68,9 +68,6 @@ resource "aws_security_group" "MyLab_Project1_SG" {
   }
 }
 
-output "ARN" {
-  value = aws_instance.MyLab_Project1.arn
-}
 output "ID" {
   value = aws_instance.MyLab_Project1.id
 }
