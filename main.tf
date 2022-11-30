@@ -34,22 +34,19 @@ resource "aws_instance" "MyLab2" {
     Name = "MyLab2"
   }
  user_data = <<-EOF
-              #!/bin/bash
-              apt-get remove docker docker-engine docker.io containerd runc
-              apt-get update
-              apt-get install \
-              ca-certificates \
-              curl \
-              gnupg \
-              lsb-release;
-              mkdir -p /etc/apt/keyrings
-              curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-              echo \ "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-              apt-get update
-              apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
-              docker push ronaldorigo/mylab:firstproject
-              docker run -d -p 80:3000 ronaldorigo/mylab:firstproject
-              EOF
+#!/bin/bash
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install -y ca-certificates curl gnupg lsb-release
+sudo mkdir -p /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo docker pull node
+EOF
 }
 
 resource "aws_security_group" "MyLab2_SG" {
