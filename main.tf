@@ -30,7 +30,6 @@ resource "aws_instance" "MyLab2" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.micro"
   key_name                    = "mylab"
-  vpc_security_group_ids      = "MyLab2_SG"
   associate_public_ip_address = true
   tags = {
     Name = "MyLab2"
