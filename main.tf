@@ -30,7 +30,7 @@ resource "aws_instance" "MyLab2" {
   ami                         = "ami-08c40ec9ead489470"
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.MyLab2_KP.key_name
-  vpc_security_group_ids      = [aws_security_group.MyLab2_SG.name]
+  vpc_security_group_ids      = "mylab"
   associate_public_ip_address = true
   tags = {
     Name = "MyLab2"
