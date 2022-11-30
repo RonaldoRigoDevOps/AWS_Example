@@ -3,11 +3,11 @@ terraform {
 
   backend "s3" {
     region         = "us-east-1"
-    bucket         = "leialoft-poc-terraform-tfstate-backend"
-    dynamodb_table = "leialoft-poc-terraform-tfstate-backend-lock"
+    bucket         = "ronaldorigobucket"
+    dynamodb_table = "ronaldorigobucket-lock"
     profile        = ""
     role_arn       = ""
     encrypt        = "true"
-    key            = "projectdevops-deleteme/terraform.tfsate"
+    key            = "firstbucket/terraform.tfsate"
   }
 }

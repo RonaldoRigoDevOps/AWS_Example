@@ -1,20 +1,3 @@
-#PROVIDER
-provider "aws" {
-  region = "us-east-1"
-}
-
-resource "aws_instance" "MyLab_Project1" {
-  ami                         = "ami-08c40ec9ead489470"
-  instance_type               = "t2.micro"
-  key_name                    = "mylab"
-  vpc_security_group_ids      = [aws_security_group.MyLab_Project1_SG.name]
-  associate_public_ip_address = true
-  tags = {
-    Name = "MyLab_Project1"
-  }
-  user_data = file("file.sh")
-}
-
 resource "aws_security_group" "MyLab_Project1_SG" {
   name        = "MyLab_Project1_SG"
   description = "Allow Access By TCP/22 & TCP/80 & TCP/8080"
@@ -66,14 +49,4 @@ resource "aws_security_group" "MyLab_Project1_SG" {
   tags = {
     Name = "MyLab_Project1_SG"
   }
-}
-
-output "ID" {
-  value = aws_instance.MyLab_Project1.id
-}
-output "DNS_PUBLIC" {
-  value = aws_instance.MyLab_Project1.public_dns
-}
-output "IP_PUBLIC" {
-  value = aws_instance.MyLab_Project1.public_ip
 }
