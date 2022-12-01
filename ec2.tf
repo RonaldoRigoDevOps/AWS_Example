@@ -7,5 +7,5 @@ resource "aws_instance" "MyLab_Project1" {
   tags = {
     Name = "MyLab_Project1"
   }
-  user_data = file("file.sh")
+  user_data = file("AppDeploy.sh")
 }
