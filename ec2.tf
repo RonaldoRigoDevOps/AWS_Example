@@ -1,7 +1,7 @@
 resource "aws_instance" "MyLab_Project1" {
-  ami                         = "ami-08c40ec9ead489470"
-  instance_type               = "t2.micro"
-  key_name                    = "mylab"
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.instance_type
+  key_name                    = aws_key_pair.MyLab_KP.key_name
   vpc_security_group_ids      = [aws_security_group.MyLab_Project1_SG.name]
   associate_public_ip_address = true
   tags = {
